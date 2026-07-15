@@ -24,11 +24,11 @@ export QOS_TO_USE=gpu_debug
 
 # Load modules
 module_load prgenv/nvidia
-module_load nvidia/24.5
-module_load hpcx-openmpi/2.19.0-cuda
+module_load nvidia/25.3
+module_load hpcx-openmpi/2.21.3
 
-module_load cmake/3.25.2
-module_load ninja/1.10.0
+module_load cmake/3.31.6
+#module_load ninja/1.10.0
 module_load fftw
 
 module load ecbuild
