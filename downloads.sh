@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export testFolderName=ectransGPUdouble
+export testFolderName=ectransGPUdouble_outofplace
 testFolderAbsolutePath=${PWD}/${testFolderName}
 
 mkdir ${testFolderAbsolutePath}
@@ -15,10 +15,10 @@ git clone -b hotfix/0.14.2 https://github.com/ecmwf/fckit.git ${testFolderAbsolu
 
 
 # fiat_dbs2 on main
-git clone -b release_2.0.0_doublestack https://github.com/npenigaud/fiat_dbs2.git ${testFolderAbsolutePath}/fiat
+git clone -b release_2.0.0_doublestack_outofplace https://github.com/npenigaud/fiat_dbs2.git ${testFolderAbsolutePath}/fiat
 
 # ectrans_dbs2 on develop
-git clone -b 1.8.0_doublestack  https://github.com/npenigaud/ectrans_dbs2.git ${testFolderAbsolutePath}/ectrans
+git clone -b 1.8.0_doublestack_outofplace  https://github.com/npenigaud/ectrans_dbs2.git ${testFolderAbsolutePath}/ectrans
 
 
 

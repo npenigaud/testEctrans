@@ -1,6 +1,6 @@
 #!/bin/bash
 
-testFolderName=ectransGPUdouble
+testFolderName=ectransGPUdouble_outofplace
 if [ ! -z "$1" ]; then
   testFolderName=$1
 fi
