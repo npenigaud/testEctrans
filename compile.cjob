@@ -1,11 +1,12 @@
 #!/bin/bash
 
+export FFTW_ARCHIVE_NAME=fftw-3.3.10
 testFolderName=ectransGPUdouble_outofplace
 if [ ! -z "$1" ]; then
   testFolderName=$1
 fi
 echo "Testing in ${testFolderName}"
-export ARCH="${PWD}/arch/ecmwf/hpc2020/nvhpc/gpu-cuda/"
+export ARCH="${PWD}/arch/amd/afar-gpu/"
 echo "Arch : $ARCH" 
 #== copy test folder to TMPDIR and go into it
 
@@ -21,7 +22,7 @@ ulimit -s unlimited
 
 #== load compilation environment
 
-source $ARCH/env.sh
+source $ARCH/env2.sh
 
 #== Compilation
 
@@ -30,11 +31,30 @@ cmake -S fckit -B fckit/build
 cmake --build fckit/build -j 8 
 
 # fiat
-cmake -S fiat -B fiat/build -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dfckit_ROOT=$PWD/fckit/build -DENABLE_GPU=ON -DENABLE_ACC=ON
-cmake --build fiat/build -j 8 
+cmake -S fiat -B fiat/build -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dfckit_ROOT=$PWD/fckit/build -DENABLE_GPU=ON -DENABLE_OMP=ON
+cmake --build fiat/build -j 8
+
+# fftw double precision
+cmake -S ${FFTW_ARCHIVE_NAME} -B ${FFTW_ARCHIVE_NAME}/build -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=${FFTW_ARCHIVE_NAME}/install -DECBUILD_Fortran_COMPILE_OPTIONS_REAL4=ON
+cmake --build ${FFTW_ARCHIVE_NAME}/build -j 32
+cmake --install ${FFTW_ARCHIVE_NAME}/build
+
+# fftw simple precision
+cmake -S ${FFTW_ARCHIVE_NAME} -B ${FFTW_ARCHIVE_NAME}/build -DBUILD_SHARED_LIBS=ON -DENABLE_FLOAT=ON -DCMAKE_INSTALL_PREFIX=${FFTW_ARCHIVE_NAME}/install -DECBUILD_Fortran_COMPILE_OPTIONS_REAL8=ON
+cmake --build ${FFTW_ARCHIVE_NAME}/build -j 32
+cmake --install ${FFTW_ARCHIVE_NAME}/build 
+
+# useful import for ectrans
+export FFTW_ROOT=${TMPDIR}/${testFolderName}/fftw-3.3.10/install
+echo FFTW_ROOT=${FFTW_ROOT}
+export MKL_ROOT=/home/software/oneapi/mkl/2026.0
+echo MKL_ROOT=${MKL_ROOT}
+export ROCM_PATH=/home/afar/software/compilers/afar/therock-afar-23.2.1-gfx90a-7.13.0-7357b5084b
+echo ROCM_PATH=${ROCM_PATH}
+
 
 # ectrans
-cmake -S ectrans -B ectrans/build -Dfiat_ROOT=$PWD/fiat/build -DECTRANS_ENABLE_GPU=ON -DENABLE_ACC=ON 
+cmake -S ectrans -B ectrans/build -Dfiat_ROOT=$PWD/fiat/build -DECTRANS_ENABLE_GPU=ON -DENABLE_HIP=ON -DENABLE_OMP=ON -DECBUILD_Fortran_COMPILE_OPTIONS_REAL4=ON -DECBUILD_Fortran_COMPILE_OPTIONS_REAL8=ON -DCMAKE_HIP_ARCHITECTURE=gfx90a 
 cmake --build ectrans/build -j 8
 
 
