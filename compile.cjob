@@ -5,6 +5,7 @@ testFolderName=ectransGPUdouble_outofplace
 if [ ! -z "$1" ]; then
   testFolderName=$1
 fi
+rm -rf $TMPDIR/${testFolderName}
 echo "Testing in ${testFolderName}"
 export ARCH="${PWD}/arch/amd/afar-gpu/"
 echo "Arch : $ARCH" 
@@ -32,16 +33,16 @@ cmake --build fckit/build -j 8
 
 # fiat
 cmake -S fiat -B fiat/build -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dfckit_ROOT=$PWD/fckit/build -DENABLE_GPU=ON -DENABLE_OMP=ON
-cmake --build fiat/build -j 8
+cmake --build fiat/build -j 8 #--verbose
 
 # fftw double precision
 cmake -S ${FFTW_ARCHIVE_NAME} -B ${FFTW_ARCHIVE_NAME}/build -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=${FFTW_ARCHIVE_NAME}/install -DECBUILD_Fortran_COMPILE_OPTIONS_REAL4=ON
-cmake --build ${FFTW_ARCHIVE_NAME}/build -j 32
+cmake --build ${FFTW_ARCHIVE_NAME}/build -j 8
 cmake --install ${FFTW_ARCHIVE_NAME}/build
 
 # fftw simple precision
 cmake -S ${FFTW_ARCHIVE_NAME} -B ${FFTW_ARCHIVE_NAME}/build -DBUILD_SHARED_LIBS=ON -DENABLE_FLOAT=ON -DCMAKE_INSTALL_PREFIX=${FFTW_ARCHIVE_NAME}/install -DECBUILD_Fortran_COMPILE_OPTIONS_REAL8=ON
-cmake --build ${FFTW_ARCHIVE_NAME}/build -j 32
+cmake --build ${FFTW_ARCHIVE_NAME}/build -j 8
 cmake --install ${FFTW_ARCHIVE_NAME}/build 
 
 # useful import for ectrans
