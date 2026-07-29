@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export FFTW_ARCHIVE_NAME=fftw-3.3.10
-testFolderName=ectransGPUdouble_outofplace
+testFolderName=ectransGPUdouble_inplace
 if [ ! -z "$1" ]; then
   testFolderName=$1
 fi
