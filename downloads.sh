@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export FFTW_ARCHIVE_NAME=fftw-3.3.10
-export testFolderName=ectransGPUdouble_outofplace
+export testFolderName=ectransGPUdouble_size
 testFolderAbsolutePath=${PWD}/${testFolderName}
 
 mkdir ${testFolderAbsolutePath}
