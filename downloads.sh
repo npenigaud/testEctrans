@@ -21,10 +21,10 @@ rm -f ${FFTW_ARCHIVE_NAME}.tar.gz
 cd -
 
 # fiat_dbs2 on main
-git clone -b release_2.0.0_doublestack_inplace_amdmuncl01_mi210 https://github.com/npenigaud/fiat_dbs2.git ${testFolderAbsolutePath}/fiat
+git clone -b release_2.0.0_doublestack_size_amdmuncl01_mi210 https://github.com/npenigaud/fiat_dbs2.git ${testFolderAbsolutePath}/fiat
 
 # ectrans_dbs2 on develop
-git clone -b 1.8.0_doublestack_inplace_amdmuncl_mi210  https://github.com/npenigaud/ectrans_dbs2.git ${testFolderAbsolutePath}/ectrans
+git clone -b 1.8.0_doublestack_size_amdmuncl_mi210  https://github.com/npenigaud/ectrans_dbs2.git ${testFolderAbsolutePath}/ectrans
 
 
 
