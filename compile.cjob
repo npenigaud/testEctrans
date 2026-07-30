@@ -32,7 +32,7 @@ cmake -S fckit -B fckit/build
 cmake --build fckit/build -j 8 
 
 # fiat
-cmake -S fiat -B fiat/build -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dfckit_ROOT=$PWD/fckit/build -DENABLE_GPU=ON -DENABLE_OMP=ON
+cmake -S fiat -B fiat/build -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dfckit_ROOT=$PWD/fckit/build -DENABLE_GPU=ON -DENABLE_OMPGPU=ON
 cmake --build fiat/build -j 8 #--verbose
 
 # fftw double precision
