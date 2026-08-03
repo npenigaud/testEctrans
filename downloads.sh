@@ -1,7 +1,6 @@
 #!/bin/bash
 
-export FFTW_ARCHIVE_NAME=fftw-3.3.10
-export testFolderName=ectransGPUdouble_outofplace
+export testFolderName=ectransGPUdouble_memory
 testFolderAbsolutePath=${PWD}/${testFolderName}
 
 mkdir ${testFolderAbsolutePath}
@@ -14,17 +13,11 @@ git clone -b develop https://github.com/ecmwf/ecbuild.git ${testFolderAbsolutePa
 # fckit on develop
 git clone -b hotfix/0.14.2 https://github.com/ecmwf/fckit.git ${testFolderAbsolutePath}/fckit
 
-cd ${testFolderAbsolutePath}
-wget https://www.fftw.org/${FFTW_ARCHIVE_NAME}.tar.gz
-tar -zvxf ${FFTW_ARCHIVE_NAME}.tar.gz
-rm -f ${FFTW_ARCHIVE_NAME}.tar.gz
-cd -
-
 # fiat_dbs2 on main
-git clone -b release_2.0.0_doublestack_size_amdmuncl01_mi210 https://github.com/npenigaud/fiat_dbs2.git ${testFolderAbsolutePath}/fiat
+git clone -b release_2.0.0_doublestack_memory_cep https://github.com/npenigaud/fiat_dbs2.git ${testFolderAbsolutePath}/fiat
 
 # ectrans_dbs2 on develop
-git clone -b 1.8.0_doublestack_size_amdmuncl_mi210  https://github.com/npenigaud/ectrans_dbs2.git ${testFolderAbsolutePath}/ectrans
+git clone -b 1.8.0_doublestack_memory_cep  https://github.com/npenigaud/ectrans_dbs2.git ${testFolderAbsolutePath}/ectrans
 
 
 

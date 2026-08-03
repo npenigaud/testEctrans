@@ -1,4 +1,0 @@
-#!/bin/bash
-
-export DR_HOOK_ASSERT_MPI_INITIALIZED=0
-export MPL_DOUBLESTACK_SIZE=1MB
